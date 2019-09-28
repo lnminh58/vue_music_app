@@ -20,9 +20,9 @@
     </v-navigation-drawer>
 
     <v-content>
-      <v-container class="fill-height" fluid>
+      <keep-alive :include="keepAliveComponents">
         <router-view></router-view>
-      </v-container>
+      </keep-alive>
     </v-content>
   </v-app>
 </template>
@@ -32,6 +32,7 @@ export default {
   name: "app",
   data: () => ({
     drawer: null,
+    keepAliveComponents: "Track",
     menu: [
       {
         name: "Tracks",
@@ -40,7 +41,7 @@ export default {
       },
       {
         name: "Artists",
-        icon: "mdi-person",
+        icon: "mdi-artist",
         to: "/about"
       }
     ]
