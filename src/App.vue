@@ -32,7 +32,7 @@ export default {
   name: "app",
   data: () => ({
     drawer: null,
-    keepAliveComponents: "Track",
+    keepAliveComponents: "Track, Artist",
     menu: [
       {
         name: "Tracks",
@@ -42,7 +42,7 @@ export default {
       {
         name: "Artists",
         icon: "mdi-artist",
-        to: "/about"
+        to: "/artist"
       }
     ]
   })
