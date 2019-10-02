@@ -30,6 +30,7 @@ const actions = {
 
       const nextIndex = nextIndexURL && getIndexFromURL(nextIndexURL);
       const prevIndex = prevIndexURL && getIndexFromURL(prevIndexURL);
+
       commit(GET_TRACK_BY_NAME_SUCCESS, { ...data, nextIndex, prevIndex });
     } catch (error) {
       commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) });
@@ -46,7 +47,12 @@ const mutations = {
     console.log('payload', payload);
     state.track.requesting = false;
     state.track.status = 'success';
-    state.track.result = payload;
+    state.track.result = payload.prevIndex === undefined
+      ? payload
+      : {
+        ...payload,
+        data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])]
+      };
   },
   [GET_TRACK_BY_NAME_FAIL](state, payload) {
     state.track.requesting = false;
