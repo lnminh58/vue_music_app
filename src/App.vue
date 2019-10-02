@@ -32,7 +32,7 @@ export default {
   name: "app",
   data: () => ({
     drawer: null,
-    keepAliveComponents: "Track, Artist",
+    keepAliveComponents: "Track,Artist",
     menu: [
       {
         name: "Tracks",
