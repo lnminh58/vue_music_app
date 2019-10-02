@@ -26,7 +26,7 @@
           v-for="track in tracks"
           :key="_.get(track, 'id')"
         >
-          <v-card class="mx-auto">
+          <v-card class="mx-auto" @click="goToTrackDetail(track)">
             <div class="d-flex justify-start">
               <img
                 width="120px"
@@ -109,9 +109,13 @@ export default {
     handleLoadMoreTrack() {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getTrackByName", {
-        name: this.searchText,
-        index: this.nextIndex
-      });
+          name: this.searchText,
+          index: this.nextIndex
+        })
+    },
+
+    goToTrackDetail(track) {
+      console.log(track)
     }
   }
 };
