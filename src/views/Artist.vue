@@ -2,16 +2,27 @@
   <v-container fluid>
     <div class="form-group">
       <label>Search Artist</label>
-      <input type="text" class="form-control" placeholder="Enter to search a Artist"
-      solo
-      v-model="searchText"
-      @input="handleSearchArtist" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter to search a Artist"
+        solo
+        v-model="searchText"
+        @input="handleSearchArtist"
+      />
     </div>
     <v-flex class="text-center ">
-        <span class="title font-weight-light">Have {{ artists.length }} result</span>
-      </v-flex>
+      <span class="title font-weight-light">Have {{ total }} result</span>
+    </v-flex>
+    <div class="text-center">
+      <v-pagination
+        v-model="page"
+        :length=" (Math.floor(total/25)) +1 "
+        :total-visible="7"
+        @input="next"
+      ></v-pagination>
+    </div>
     <v-layout wrap v-if="artists.length > 0">
-
       <v-flex
         pa-3
         xs12
@@ -62,22 +73,31 @@ export default {
   data() {
     return {
       searchText: "",
-      numberOfResult: 0
+      page: 1,
     };
   },
   computed: {
     ...mapState({
-      total: state => get(state, "artist.artist.result.total", 0)
+      total: state => get(state, "artist.artist.result.total", 0),
+      nextIndex: state => get(state, "artist.artist.result.nextIndex"),
+      requesting: state => get(state, "artist.artist.requesting"),
     }),
     ...mapGetters({
-      artists: "artists",
+      artists: "artists"
     })
   },
   methods: {
     handleSearchArtist: debounce(function(text) {
       this.$store.dispatch("getArtistByName", { name: this.searchText });
     }, 300),
-  }
+    next(page) {
+      if (!this.nextIndex || this.requesting) return;
+      this.$store.dispatch("getArtistByName", {
+        name: this.searchText,
+        index: this.nextIndex
+      });
+    }
+  },
 };
 </script>
 
@@ -101,7 +121,7 @@ export default {
 .player {
   width: 100%;
 }
-.form-group{
+.form-group {
   margin: 10px;
 }
 </style>
