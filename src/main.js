@@ -10,6 +10,8 @@ import Paginate from 'vuejs-paginate';
 Vue.component('paginate', Paginate)
 Vue.config.productionTip = false
 
+export const eventBus = new Vue();
+
 const mixins = [lodash];
 mixins.forEach(mixin => Vue.mixin(mixin));
 

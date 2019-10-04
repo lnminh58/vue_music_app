@@ -19,7 +19,9 @@
         v-model="page"
         :length=" (Math.floor(total/25)) +1 "
         :total-visible="7"
-        @input="next"
+        @next="next"
+        @previous="previous"
+        @input="selectedPage"
       ></v-pagination>
     </div>
     <v-layout wrap v-if="artists.length > 0">
@@ -67,9 +69,9 @@ import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
 export default {
   name: "Artist",
-  mounted() {
-    this.$store.dispatch("getArtistByName", { name: "" });
-  },
+  // mounted() {
+  //   this.$store.dispatch("getArtistByName", { name: "" });
+  // },
   data() {
     return {
       searchText: "",
@@ -90,12 +92,21 @@ export default {
     handleSearchArtist: debounce(function(text) {
       this.$store.dispatch("getArtistByName", { name: this.searchText });
     }, 300),
-    next(page) {
+    next() {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getArtistByName", {
         name: this.searchText,
-        index: this.nextIndex
+        index: this.nextIndex,
       });
+    },
+    previous() {
+      if (this.requesting) return;
+      this.$store.dispatch("getArtistByName", {
+        name: this.searchText,
+        // index: this.prevIndex
+      });
+    },
+    selectPage(page) {
     }
   },
 };

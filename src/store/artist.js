@@ -46,7 +46,7 @@ const mutations = {
   [GET_ARTIST_BY_NAME_SUCCESS](state, payload) {
     state.artist.requesting = false;
     state.artist.status = 'success';
-    state.artist.result = payload;
+    state.artist.result = payload
   },
 
   [GET_ARTIST_BY_NAME_FAIL](state, payload) {

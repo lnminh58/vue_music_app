@@ -26,7 +26,7 @@
           v-for="track in tracks"
           :key="_.get(track, 'id')"
         >
-          <v-card class="mx-auto" @click="goToTrackDetail(track)">
+          <v-card class="mx-auto" :to="link" @click="goToTrackDetail(track)">
             <div class="d-flex justify-start">
               <img
                 width="120px"
@@ -77,12 +77,17 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
+import { eventBus } from "../main";
 
 export default {
   name: "Track",
   data() {
     return {
-      searchText: ""
+      searchText: "",
+      link: {
+        name: "TrackDetail",
+        to: "/trackDetail"
+      },
     };
   },
   computed: {
@@ -109,13 +114,14 @@ export default {
     handleLoadMoreTrack() {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getTrackByName", {
-          name: this.searchText,
-          index: this.nextIndex
-        })
+        name: this.searchText,
+        index: this.nextIndex
+      })
     },
 
     goToTrackDetail(track) {
-      console.log(track)
+      console.log('Track ID', track.id);
+      eventBus.$emit('getTrackID', track.id)
     }
   }
 };
