@@ -16,6 +16,12 @@ const state = {
     status: '',
     result: null,
     error: null
+  },
+  trackDetail: {
+    requesting: false,
+    status: '',
+    result: null,
+    error: null
   }
 };
 
@@ -36,6 +42,7 @@ const actions = {
       commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) });
     }
   }
+
 };
 
 const mutations = {
@@ -47,12 +54,13 @@ const mutations = {
     console.log('payload', payload);
     state.track.requesting = false;
     state.track.status = 'success';
-    state.track.result = payload.prevIndex === undefined
-      ? payload
-      : {
-        ...payload,
-        data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])]
-      };
+    state.track.result =
+      payload.prevIndex === undefined
+        ? payload
+        : {
+          ...payload,
+          data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])]
+        };
   },
   [GET_TRACK_BY_NAME_FAIL](state, payload) {
     state.track.requesting = false;

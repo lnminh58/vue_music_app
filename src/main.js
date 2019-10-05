@@ -8,8 +8,6 @@ import lodash from './mixins/lodash';
 
 Vue.config.productionTip = false
 
-export const eventBus = new Vue();
-
 const mixins = [lodash];
 mixins.forEach(mixin => Vue.mixin(mixin));
 

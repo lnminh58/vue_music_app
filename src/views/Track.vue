@@ -77,7 +77,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
-import { eventBus } from "../main";
 
 export default {
   name: "Track",

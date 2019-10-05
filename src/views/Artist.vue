@@ -70,9 +70,6 @@ import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
 export default {
   name: "Artist",
-  // mounted() {
-  //   this.$store.dispatch("getArtistByName", { name: "" });
-  // },
   data() {
     return {
       searchText: "",
