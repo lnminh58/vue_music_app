@@ -5,9 +5,7 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import lodash from './mixins/lodash';
-import Paginate from 'vuejs-paginate';
 
-Vue.component('paginate', Paginate)
 Vue.config.productionTip = false
 
 export const eventBus = new Vue();

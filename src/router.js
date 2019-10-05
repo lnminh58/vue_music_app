@@ -21,9 +21,10 @@ export default new Router({
       component: Artist
     },
     {
-      path: '/trackDetail',
+      path: '/track-detail',
       name: 'TrackDetail',
-      component: TracKDetail
+      component: TracKDetail,
+      props: (route) => ({ trackId: route.query.trackId })
     }
   ]
 })

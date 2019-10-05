@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <button class="btn btn-primary" @click="getTrackID">Show TrackID</button>
-    <p>Track ID: {{ track.trackID }}</p>
+    <p>Track ID: {{ trackId }}</p>
   </div>
 </template>
 
@@ -9,22 +8,19 @@
 import { eventBus } from "../main";
 
 export default {
+  props: {
+    trackId: String
+  },
   data() {
     return {
-      track: {
-        trackID: ''
-      }
+
     };
   },
   created() {
-    eventBus.$on("getTrackID", (TrackID) => {
-      this.track.trackID = TrackID;
-    })
+    console.log(this.trackId)
   },
   methods: {
-    getTrackID() {
-      console.log('detail ID', this.track.trackID);
-    }
+
   }
 };
 </script>

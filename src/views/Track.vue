@@ -26,7 +26,7 @@
           v-for="track in tracks"
           :key="_.get(track, 'id')"
         >
-          <v-card class="mx-auto" :to="link" @click="goToTrackDetail(track)">
+          <v-card class="mx-auto" @click="goToTrackDetail(track)">
             <div class="d-flex justify-start">
               <img
                 width="120px"
@@ -87,7 +87,7 @@ export default {
       link: {
         name: "TrackDetail",
         to: "/trackDetail"
-      },
+      }
     };
   },
   computed: {
@@ -116,12 +116,12 @@ export default {
       this.$store.dispatch("getTrackByName", {
         name: this.searchText,
         index: this.nextIndex
-      })
+      });
     },
 
     goToTrackDetail(track) {
-      console.log('Track ID', track.id);
-      eventBus.$emit('getTrackID', track.id)
+      const trackId = get(track, "id");
+      this.$router.push({ path: "/track-detail", query: { trackId } });
     }
   }
 };

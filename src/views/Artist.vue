@@ -17,11 +17,12 @@
     <div class="text-center">
       <v-pagination
         v-model="page"
-        :length=" (Math.floor(total/25)) +1 "
+        :length="calculateTotalPage"
         :total-visible="7"
-        @next="next"
-        @previous="previous"
-        @input="selectedPage"
+        @next="loadNextPage"
+        @previous="loadPreviousPage"
+        @input="loadPage"
+        v-if="total > 0"
       ></v-pagination>
     </div>
     <v-layout wrap v-if="artists.length > 0">
@@ -75,40 +76,56 @@ export default {
   data() {
     return {
       searchText: "",
-      page: 1,
+      page: 1
     };
   },
   computed: {
     ...mapState({
       total: state => get(state, "artist.artist.result.total", 0),
       nextIndex: state => get(state, "artist.artist.result.nextIndex"),
-      requesting: state => get(state, "artist.artist.requesting"),
+      prevIndex: state => get(state, "artist.artist.result.prevIndex"),
+      requesting: state => get(state, "artist.artist.requesting")
     }),
     ...mapGetters({
       artists: "artists"
-    })
+    }),
+    calculateTotalPage() {
+      const pageTemp = this.total / 25;
+      return pageTemp - Math.floor(pageTemp) === 0
+        ? pageTemp
+        : Math.floor(pageTemp) + 1;
+    }
   },
   methods: {
     handleSearchArtist: debounce(function(text) {
+      this.page = 1;
       this.$store.dispatch("getArtistByName", { name: this.searchText });
     }, 300),
-    next() {
+
+    loadNextPage() {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getArtistByName", {
         name: this.searchText,
-        index: this.nextIndex,
+        index: this.nextIndex
       });
     },
-    previous() {
+
+    loadPreviousPage() {
+      if (!this.prevIndex && this.requesting) return;
+      this.$store.dispatch("getArtistByName", {
+        name: this.searchText,
+        index: this.prevIndex
+      });
+    },
+
+    loadPage(page) {
       if (this.requesting) return;
       this.$store.dispatch("getArtistByName", {
         name: this.searchText,
-        // index: this.prevIndex
+        index: 25 * (page - 1)
       });
-    },
-    selectPage(page) {
     }
-  },
+  }
 };
 </script>
 
