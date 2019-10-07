@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex"
 import { get, debounce } from "lodash";
 
 export default {
@@ -83,10 +83,6 @@ export default {
   data() {
     return {
       searchText: "",
-      link: {
-        name: "TrackDetail",
-        to: "/trackDetail"
-      }
     };
   },
   computed: {
