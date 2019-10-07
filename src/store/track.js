@@ -27,19 +27,19 @@ const state = {
 
 const actions = {
   async getTrackByName({ state, commit }, params) {
-    commit(GET_TRACK_BY_NAME_REQUEST);
+    commit(GET_TRACK_BY_NAME_REQUEST)
     try {
-      const res = await Track.searchTrack(params);
+      const res = await Track.searchTrack(params)
       const data = get(res, 'data');
-      const nextIndexURL = get(data, 'next');
-      const prevIndexURL = get(data, 'prev');
+      const nextIndexURL = get(data, 'next')
+      const prevIndexURL = get(data, 'prev')
 
-      const nextIndex = nextIndexURL && getIndexFromURL(nextIndexURL);
-      const prevIndex = prevIndexURL && getIndexFromURL(prevIndexURL);
+      const nextIndex = nextIndexURL && getIndexFromURL(nextIndexURL)
+      const prevIndex = prevIndexURL && getIndexFromURL(prevIndexURL)
 
-      commit(GET_TRACK_BY_NAME_SUCCESS, { ...data, nextIndex, prevIndex });
+      commit(GET_TRACK_BY_NAME_SUCCESS, { ...data, nextIndex, prevIndex })
     } catch (error) {
-      commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) });
+      commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) })
     }
   }
 
@@ -47,13 +47,13 @@ const actions = {
 
 const mutations = {
   [GET_TRACK_BY_NAME_REQUEST](state) {
-    state.track.requesting = true;
-    state.track.status = '';
+    state.track.requesting = true
+    state.track.status = ''
   },
   [GET_TRACK_BY_NAME_SUCCESS](state, payload) {
-    console.log('payload', payload);
-    state.track.requesting = false;
-    state.track.status = 'success';
+    console.log('payload', payload)
+    state.track.requesting = false
+    state.track.status = 'success'
     state.track.result =
       payload.prevIndex === undefined
         ? payload
@@ -63,9 +63,9 @@ const mutations = {
         };
   },
   [GET_TRACK_BY_NAME_FAIL](state, payload) {
-    state.track.requesting = false;
-    state.track.status = 'error';
-    state.track.error = payload;
+    state.track.requesting = false
+    state.track.status = 'error'
+    state.track.error = payload
   }
 };
 
