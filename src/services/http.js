@@ -10,7 +10,7 @@ axios.interceptors.request.use(config => config, error => Promise.reject(error))
 axios.interceptors.response.use(
   response => response,
   error => Promise.reject(error.response || error.request || error.message)
-);
+)
 
 const http = {
   request(config = {}) {
@@ -33,4 +33,4 @@ const http = {
   }
 };
 
-export default http;
+export default http

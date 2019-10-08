@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import track from './track';
-import artist from './artist';
+import track from './track'
+import artist from './artist'
 
 Vue.use(Vuex)
 

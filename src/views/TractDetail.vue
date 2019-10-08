@@ -31,7 +31,7 @@ export default {
   computed: {
     ...mapState({
       requesting: state => get(state, "track.trackDetail.requesting"),
-      track: state => get(state, 'trackDetail.result')
+      result: state => get(state, 'trackDetail.result')
     }),
     ...mapGetters({
       track: "track",
