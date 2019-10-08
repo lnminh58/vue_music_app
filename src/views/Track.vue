@@ -110,7 +110,7 @@ export default {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getTrackByName", {
         name: this.searchText,
-        index: this.nextIndex
+        index: this.nextIndex,
       });
     },
 

@@ -4,7 +4,19 @@
     <button class="btn btn-primary" @click="getTrackDetail">
       getTrackDetail
     </button>
-    <p>Ranking: {{ track }}</p>
+    <p>Ranking: {{ track.rank }}</p>
+    <template>
+  <v-row align="center" justify="center">
+    <v-img
+      src="https://picsum.photos/id/11/500/300"
+      lazy-src="https://picsum.photos/id/11/10/6"
+      aspect-ratio="1"
+      class="grey lighten-2"
+      max-width="500"
+      max-height="300"
+    ></v-img>
+  </v-row>
+</template>
   </div>
 </template>
 
@@ -14,21 +26,22 @@ import { get, debounce } from "lodash";
 
 export default {
   props: {
-    trackId: Number
+    trackId: String
   },
   computed: {
     ...mapState({
-      requesting: state => get(state, "track.trackDetail.requesting")
+      requesting: state => get(state, "track.trackDetail.requesting"),
+      track: state => get(state, 'trackDetail.result')
     }),
     ...mapGetters({
       track: "track",
-    })
+    }),
   },
   methods: {
     getTrackDetail(trackId) {
       this.$store.dispatch("getTrackByID", this.trackId);
-      console.log(this.track)
-    }
+      console.log('track', this.track)
+    },
   },
 };
 </script>

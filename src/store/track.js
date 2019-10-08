@@ -24,26 +24,26 @@ const state = {
   trackDetail: {
     requesting: false,
     status: '',
-    result: null,
+    result: {},
     error: null
   }
 };
 
 const actions = {
   async getTrackByName({ state, commit }, params) {
-    commit(GET_TRACK_BY_NAME_REQUEST)
+    commit(GET_TRACK_BY_NAME_REQUEST);
     try {
-      const res = await Track.searchTrack(params)
+      const res = await Track.searchTrack(params);
       const data = get(res, 'data');
-      const nextIndexURL = get(data, 'next')
-      const prevIndexURL = get(data, 'prev')
+      const nextIndexURL = get(data, 'next');
+      const prevIndexURL = get(data, 'prev');
 
-      const nextIndex = nextIndexURL && getIndexFromURL(nextIndexURL)
-      const prevIndex = prevIndexURL && getIndexFromURL(prevIndexURL)
+      const nextIndex = nextIndexURL && getIndexFromURL(nextIndexURL);
+      const prevIndex = prevIndexURL && getIndexFromURL(prevIndexURL);
 
-      commit(GET_TRACK_BY_NAME_SUCCESS, { ...data, nextIndex, prevIndex })
+      commit(GET_TRACK_BY_NAME_SUCCESS, { ...data, nextIndex, prevIndex });
     } catch (error) {
-      commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) })
+      commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) });
     }
   },
   async getTrackByID({ state, commit }, trackId) {
@@ -51,34 +51,32 @@ const actions = {
     try {
       const res = await Track.getTrack(trackId);
       const data = get(res, 'data');
+      console.log('data', data);
       commit(GET_TRACK_BY_ID_SUCCESS, data)
     } catch (error) {
-      commit(GET_TRACK_BY_ID_FAIL, { error: serializeError(error) })
+      commit(GET_TRACK_BY_ID_FAIL, { error: serializeError(error) });
     }
   }
 };
 
 const mutations = {
   [GET_TRACK_BY_NAME_REQUEST](state) {
-    state.track.requesting = true
-    state.track.status = ''
+    state.track.requesting = true;
+    state.track.status = '';
   },
   [GET_TRACK_BY_NAME_SUCCESS](state, payload) {
-    console.log('payload', payload)
-    state.track.requesting = false
-    state.track.status = 'success'
+    console.log('payload', payload);
+    state.track.requesting = false;
+    state.track.status = 'success';
     state.track.result =
       payload.prevIndex === undefined
         ? payload
-        : {
-          ...payload,
-          data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])]
-        };
+        : { ...payload, data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])] };
   },
   [GET_TRACK_BY_NAME_FAIL](state, payload) {
-    state.track.requesting = false
-    state.track.status = 'error'
-    state.track.error = payload
+    state.track.requesting = false;
+    state.track.status = 'error';
+    state.track.error = payload;
   },
   [GET_TRACK_BY_ID_REQUEST](state) {
     state.trackDetail.requesting = true;
@@ -87,12 +85,12 @@ const mutations = {
   [GET_TRACK_BY_ID_SUCCESS](state, payload) {
     state.trackDetail.requesting = false;
     state.trackDetail.status = 'success';
-    state.trackDetail.result = payload
+    state.trackDetail.result = payload;
   },
   [GET_TRACK_BY_ID_FAIL](state, payload) {
     state.trackDetail.requesting = false;
     state.trackDetail.status = 'error';
-    state.trackDetail.result = payload
+    state.trackDetail.result = payload;
   }
 };
 
