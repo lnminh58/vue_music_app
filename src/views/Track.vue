@@ -115,7 +115,7 @@ export default {
     },
 
     goToTrackDetail(track) {
-      const trackId = get(track, "id");
+      const trackId = get(track, "id").toString();
       this.$router.push({ path: "/track-detail", query: { trackId } });
     }
   }
