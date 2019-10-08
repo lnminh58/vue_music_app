@@ -7,8 +7,11 @@ import { getIndexFromURL } from '../utils/general'
 import {
   GET_TRACK_BY_NAME_REQUEST,
   GET_TRACK_BY_NAME_SUCCESS,
-  GET_TRACK_BY_NAME_FAIL
-} from '../constants/mutationTypes'
+  GET_TRACK_BY_NAME_FAIL,
+  GET_TRACK_BY_ID_REQUEST,
+  GET_TRACK_BY_ID_SUCCESS,
+  GET_TRACK_BY_ID_FAIL
+} from '../constants/mutationTypes';
 
 const state = {
   track: {
@@ -20,7 +23,7 @@ const state = {
   trackDetail: {
     requesting: false,
     status: '',
-    result: null,
+    result: {},
     error: null
   }
 };
@@ -41,8 +44,18 @@ const actions = {
     } catch (error) {
       commit(GET_TRACK_BY_NAME_FAIL, { error: serializeError(error) })
     }
+  },
+  async getTrackByID({ state, commit }, trackId) {
+    commit(GET_TRACK_BY_ID_REQUEST);
+    try {
+      const res = await Track.getTrack(trackId);
+      const data = get(res, 'data');
+      console.log('data', data);
+      commit(GET_TRACK_BY_ID_SUCCESS, data)
+    } catch (error) {
+      commit(GET_TRACK_BY_ID_FAIL, { error: serializeError(error) });
+    }
   }
-
 };
 
 const mutations = {
@@ -57,20 +70,32 @@ const mutations = {
     state.track.result =
       payload.prevIndex === undefined
         ? payload
-        : {
-          ...payload,
-          data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])]
-        };
+        : { ...payload, data: [...get(state, 'track.result.data', []), ...get(payload, 'data', [])] };
   },
   [GET_TRACK_BY_NAME_FAIL](state, payload) {
-    state.track.requesting = false
-    state.track.status = 'error'
-    state.track.error = payload
+    state.track.requesting = false;
+    state.track.status = 'error';
+    state.track.error = payload;
+  },
+  [GET_TRACK_BY_ID_REQUEST](state) {
+    state.trackDetail.requesting = true;
+    state.trackDetail.status = '';
+  },
+  [GET_TRACK_BY_ID_SUCCESS](state, payload) {
+    state.trackDetail.requesting = false;
+    state.trackDetail.status = 'success';
+    state.trackDetail.result = payload;
+  },
+  [GET_TRACK_BY_ID_FAIL](state, payload) {
+    state.trackDetail.requesting = false;
+    state.trackDetail.status = 'error';
+    state.trackDetail.result = payload;
   }
 };
 
 const getters = {
-  tracks: state => get(state, 'track.result.data', [])
+  tracks: state => get(state, 'track.result.data', []),
+  track: state => get(state, 'trackDetail.result.data', {})
 };
 
 export default {

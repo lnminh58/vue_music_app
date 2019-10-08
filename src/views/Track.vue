@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex"
 import { get, debounce } from "lodash";
 
 export default {
@@ -83,10 +83,6 @@ export default {
   data() {
     return {
       searchText: "",
-      link: {
-        name: "TrackDetail",
-        to: "/trackDetail"
-      }
     };
   },
   computed: {
@@ -114,7 +110,7 @@ export default {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getTrackByName", {
         name: this.searchText,
-        index: this.nextIndex
+        index: this.nextIndex,
       });
     },
 
