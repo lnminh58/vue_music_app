@@ -7,7 +7,7 @@
       <h3 class="mb-1px mt-0">
         <span class="label label-info">Song: {{ _.get(track, "title") }}</span>
       </h3>
-      <div class="d-flex justify-start">
+      <div class="d-flex justify-start mt-2">
         <img
           width="100%"
           height="600px"
@@ -136,5 +136,9 @@ export default {
 .player {
   border: 2px none;
   border-radius: 10px;
+}
+.form-group{
+  font-family: 'Arizonia';
+  font-size: 20px
 }
 </style>
