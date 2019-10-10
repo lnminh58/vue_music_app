@@ -116,6 +116,7 @@ export default {
 
     goToTrackDetail(track) {
       const trackId = get(track, "id").toString();
+      const albumId = get(track, 'album.id')
       this.$router.push({ path: "/track-detail", query: { trackId } });
     }
   }

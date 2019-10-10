@@ -37,7 +37,7 @@
         <div class="mx-2">
           <h3 class="mb-1px mt-0">
             <span class="label label-warning"
-              >Album: {{ _.get(track, "album.title") }}</span
+              >Album: {{ _.get(album, "title") }}</span
             >
           </h3>
           <div class="form-group my-1">
@@ -91,14 +91,18 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch("getTrackByID", this.trackId);
-    console.log(this.track);
+    console.log("albumID", this.track.album.id);
+    await this.$store.dispatch("getAlbumByID", this.track.album.id);
+    console.log('albumVue: ', this.album)
   },
   computed: {
     ...mapState({
-      requesting: state => get(state, "track.trackDetail.requesting")
+      requesting1: state => get(state, "track.trackDetail.requesting"),
+      requesting2: state => get(state, "album.album.requesting")
     }),
     ...mapGetters({
-      track: "track"
+      track: "track",
+      album: "album"
     })
   },
   methods: {}
@@ -108,11 +112,6 @@ export default {
 <style scoped>
 .container {
   min-height: 100%;
-  background-image: linear-gradient(
-    rgb(23, 75, 75),
-    rgb(40, 55, 78),
-    rgb(84, 72, 110)
-  );
 }
 .player-container {
   flex: 1;
@@ -137,8 +136,8 @@ export default {
   border: 2px none;
   border-radius: 10px;
 }
-.form-group{
-  font-family: 'Arizonia';
-  font-size: 20px
+.form-group {
+  font-family: "Arizonia";
+  font-size: 20px;
 }
 </style>
