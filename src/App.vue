@@ -1,12 +1,12 @@
 
 <template>
   <v-app>
-    <v-app-bar clipped-left app color="amber darken-2" dark>
+    <v-app-bar clipped-left app color="indigo accent-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Music Search Tool</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer clipped v-model="drawer" app>
+    <v-navigation-drawer clipped v-model="drawer" app color="indigo accent-1">
       <v-list dense>
         <v-list-item :to="item.to" v-for="(item, index) in menu" :key="index">
           <v-list-item-action>
@@ -19,7 +19,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-content>
+    <v-content style="backgroundcolor: red">
       <keep-alive :include="keepAliveComponents">
         <router-view></router-view>
       </keep-alive>
