@@ -40,19 +40,9 @@
               >Album: {{ _.get(album, "title") }}</span
             >
           </h3>
-          <div class="form-group my-1">
-            <div class="alert alert-success my-0" role="alert">
-              Rank: {{ _.get(track, "rank") }}
-            </div>
-            <div class="alert alert-info my-0" role="alert">
-              Date: {{ _.get(track, "album.release_date") }}
-            </div>
-            <div class="alert alert-warning my-0" role="alert">
-              <a :href="_.get(track, 'album.link')"
-                >Listen more track in album</a
-              >
-            </div>
-          </div>
+          <ul class="form-group">
+            <li v-for="item in tracksArr" :key="item">{{ item }}</li>
+          </ul>
         </div>
       </div>
       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-12" style="height: 50%">
@@ -86,6 +76,11 @@ import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
 
 export default {
+  data() {
+    return {
+      tracksArr: []
+    };
+  },
   props: {
     trackId: String
   },
@@ -93,7 +88,11 @@ export default {
     await this.$store.dispatch("getTrackByID", this.trackId);
     console.log("albumID", this.track.album.id);
     await this.$store.dispatch("getAlbumByID", this.track.album.id);
-    console.log('albumVue: ', this.album)
+    console.log("albumVue: ", this.album);
+    this.album.tracks.data.title.forEach(element => {
+      return this.tracksArr.push(element);
+    });
+    console.log("arr", this.tracksArr);
   },
   computed: {
     ...mapState({

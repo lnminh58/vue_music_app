@@ -51,7 +51,7 @@ const mutations = {
 };
 
 const getters = {
-  album: state => get(state, 'album.result.data', {})
+  album: state => get(state, 'album.result', {})
 };
 
 export default {
