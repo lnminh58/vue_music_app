@@ -25,6 +25,6 @@ export default new Router({
       name: 'TrackDetail',
       component: TracKDetail,
       props: (route) => ({ trackId: route.query.trackId })
-    }
+    },
   ]
 })

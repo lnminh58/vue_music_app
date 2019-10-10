@@ -7,5 +7,5 @@ export default class Track {
 
   static getTrack(trackID) {
     return http.get(`track/${trackID}`)
-  }
+  };
 }
