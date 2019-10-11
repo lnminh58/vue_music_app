@@ -16,10 +16,11 @@
             <v-list-item-title>{{ item.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <p style="position:absolute; left:5%; top:95%">Copyright © 2019 Phuoc Thiem Coporation Music search tool</p>
       </v-list>
     </v-navigation-drawer>
 
-    <v-content style="backgroundcolor: red">
+    <v-content>
       <keep-alive :include="keepAliveComponents">
         <router-view></router-view>
       </keep-alive>

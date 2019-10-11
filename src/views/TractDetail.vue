@@ -28,12 +28,15 @@
           Date: {{ _.get(track, "release_date") }}
         </div>
         <div class="alert alert-success my-0" role="alert">
-          <a :href="_.get(track, 'link')">Full MP3</a>
+          <a :href="_.get(track, 'link')">>>Full MP3</a>
         </div>
       </div>
     </div>
     <div class="row" style="height: 100%">
-      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-12 pb-1" style="height: 50%">
+      <div
+        class="col-xs-12 col-sm-8 col-md-8 col-lg-12 pb-1"
+        style="height: 50%"
+      >
         <div class="mx-2">
           <h3 class="mb-1px mt-0">
             <span class="label label-warning"
@@ -59,7 +62,10 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-12 pt-0" style="height: 50%">
+      <div
+        class="col-xs-12 col-sm-8 col-md-8 col-lg-12 pt-0"
+        style="height: 50%"
+      >
         <div class="mx-2">
           <h3 class="mb-1px mt-0">
             <span class="label label-success"
@@ -104,18 +110,18 @@ export default {
     this.album.tracks.data.forEach(element => {
       return this.tracksArr.push(element);
     });
-    await this.$store.dispatch("getArtistByID", this.track.artist.id)
+    await this.$store.dispatch("getArtistByID", this.track.artist.id);
   },
   computed: {
     ...mapState({
       requesting1: state => get(state, "track.trackDetail.requesting"),
       requesting2: state => get(state, "album.album.requesting"),
-      requesting3: state => get(state, "artist.artistDetail.requesting"),
+      requesting3: state => get(state, "artist.artistDetail.requesting")
     }),
     ...mapGetters({
       track: "track",
       album: "album",
-      artist: "artist",
+      artist: "artist"
     })
   },
   methods: {}
@@ -177,6 +183,6 @@ li {
 div.scrollmenu {
   overflow: auto;
   height: 600px;
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
 </style>
