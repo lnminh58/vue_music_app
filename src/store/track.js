@@ -50,6 +50,7 @@ const actions = {
     try {
       const res = await Track.getTrack(trackId);
       const data = get(res, 'data');
+      console.log('track: ', data)
       commit(GET_TRACK_BY_ID_SUCCESS, { data })
     } catch (error) {
       commit(GET_TRACK_BY_ID_FAIL, { error: serializeError(error) });

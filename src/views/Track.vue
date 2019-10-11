@@ -75,14 +75,14 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex"
+import { mapState, mapGetters } from "vuex";
 import { get, debounce } from "lodash";
 
 export default {
   name: "Track",
   data() {
     return {
-      searchText: "",
+      searchText: ""
     };
   },
   computed: {
@@ -110,12 +110,13 @@ export default {
       if (!this.nextIndex || this.requesting) return;
       this.$store.dispatch("getTrackByName", {
         name: this.searchText,
-        index: this.nextIndex,
+        index: this.nextIndex
       });
     },
 
     goToTrackDetail(track) {
       const trackId = get(track, "id").toString();
+      const albumId = get(track, "album.id");
       this.$router.push({ path: "/track-detail", query: { trackId } });
     }
   }
