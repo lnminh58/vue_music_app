@@ -98,7 +98,6 @@ import { get, debounce } from "lodash";
 export default {
   data() {
     return {
-      tracksArr: []
     };
   },
   props: {
@@ -107,13 +106,13 @@ export default {
   async mounted() {
     await this.$store.dispatch("getTrackByID", this.trackId);
     await this.$store.dispatch("getAlbumByID", this.track.album.id);
-    this.album.tracks.data.forEach(element => {
-      return this.tracksArr.push(element);
-    });
     await this.$store.dispatch("getArtistByID", this.track.artist.id);
+    console.log(this.tracksArr.map(item => item.title))
   },
   computed: {
     ...mapState({
+      tracksArr: state => get(state, "album.album.result.tracks.data"),
+      // coding convention: rename varible
       requesting1: state => get(state, "track.trackDetail.requesting"),
       requesting2: state => get(state, "album.album.requesting"),
       requesting3: state => get(state, "artist.artistDetail.requesting")
